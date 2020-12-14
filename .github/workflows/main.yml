@@ -19,12 +19,12 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    #- uses: actions/checkout@v2
    
     - name: test
       id: gh_ws
       shell: pwsh
       run: |
-        echo $env:DB_Server_Name.database.usgovcloudapi.net"
+        echo $env:DB_Server_Name.database.usgovcloudapi.net
       env:
           DB_Server_Name: ${{ env.SERVER_NAME }}
