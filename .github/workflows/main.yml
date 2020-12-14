@@ -25,8 +25,7 @@ jobs:
       id: gh_ws
       shell: pwsh
       run: |
-
+        echo "${{ env:SERVER_NAME }}.database.usgovcloudapi.net"
         echo "${{ env:DB_Server_Name }}.database.usgovcloudapi.net"
-
-        env:
+      env:
           DB_Server_Name: ${{ env.SERVER_NAME }}
