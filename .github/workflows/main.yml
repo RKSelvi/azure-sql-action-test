@@ -2,6 +2,9 @@
 
 name: CI
 
+env:
+  SERVER_NAME: ${{ secrets.AZURE_SQL_SERVER_NAME }}
+
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
@@ -21,14 +24,12 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
-    # Login to Azure
-    - uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-    # Deploy to Azure SQL
-    - uses: azure/sql-action@v1
-      with:
-        server-name: ${{ secrets.AZURE_SQL_SERVER_NAME }}
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
-        sql-file: 'sql/deploy.sql'
-
+   
+    - name: test
+      id: gh_ws
+      shell: pwsh
+      run: |
+        $full_server_name={{ $env:DB_Server_Name }}.database.usgovcloudapi.net
+        $full_server_name
+        env:
+          DB_Server_Name: ${{ env.SERVER_NAME }}
