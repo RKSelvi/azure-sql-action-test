@@ -25,7 +25,7 @@ jobs:
       id: gh_ws
       shell: pwsh
       run: |
-        $env:DB_Server_Name
+        ${{ env:DB_Server_Name }}
         $full_server_name= ${{ env:DB_Server_Name }}.database.usgovcloudapi.net
         $full_server_name
         env:
