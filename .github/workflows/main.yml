@@ -18,6 +18,10 @@ jobs:
       run: |
         $test="$env:DB_Server_Name.database.usgovcloudapi.net"
         echo $test
+
+        $maskTest = $("123L$#@nmok")
+        echo "::add-mask::$maskTest"
+        echo "::set-output name=MASK_KEY::$maskTest"
       env:
           DB_Server_Name: ${{ env.SERVER_NAME }}
 
@@ -26,9 +30,13 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     # Deploy to Azure SQL
     - uses: azure/sql-action@v1
       with:
         server-name: ${{ secrets.AZURE_SQL_SERVER_NAME }}
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         sql-file: 'sql/deploy.sql'
+        arguments: "/Variables:DataLakeAccessKey=\"${{ env.MASK_KEY }}\""
+      env:
+        TEST_MASK: ${{ steps.gh_ws.outputs.MASK_KEY }}
