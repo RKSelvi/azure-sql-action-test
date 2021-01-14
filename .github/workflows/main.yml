@@ -22,6 +22,7 @@ jobs:
         $maskTest = $("123L$#@nmok")
         echo "::add-mask::$maskTest"
         echo "::set-output name=MASK_KEY::$maskTest"
+        $maskTest
       env:
           DB_Server_Name: ${{ env.SERVER_NAME }}
 
@@ -37,6 +38,6 @@ jobs:
         server-name: ${{ secrets.AZURE_SQL_SERVER_NAME }}
         connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
         sql-file: 'sql/deploy.sql'
-        arguments: "/Variables:DataLakeAccessKey=\"${{ env.MASK_KEY }}\""
+        arguments: "/Variables:DataLakeAccessKey=\"${{ env.TEST_MASK }}\""
       env:
         TEST_MASK: ${{ steps.gh_ws.outputs.MASK_KEY }}
